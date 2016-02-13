@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/SoularPowered/get-post-check/issues"
   },
-  "homepage": "https://github.com/SoularPowered/get-post-check#readme"
+  "homepage": "https://github.com/SoularPowered/get-post-check#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "express-handlebars": "^3.0.0"
+  }
 }
