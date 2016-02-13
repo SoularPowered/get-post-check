@@ -17,7 +17,7 @@ var app = express();
 
 // Import body-parser / setup (middleware for parsing POST content)
 var bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Import and set up handlebars
@@ -56,9 +56,10 @@ app.get('/', function(req,res){
     }
     
     // Make a 'content' object and pass it to our render page with a kvPairs[] property
-    var content = {};
-    content.kvPairs = getRequest;
-    res.render('get', content);
+    var payload = {};
+    payload.kvPairs = getRequest;
+    payload.typeName = "GET";
+    res.render('get-post', payload);
 });
 
 // If a POST request is received, parse the query or jsson and render the post.handlebars page
@@ -70,9 +71,10 @@ app.post('/', function(req, res){
     }
 
     // Make a 'content' object and pass it to our render page with a kvPairs[] property
-    var content = {};
-    content.kvPairs = postRequest;
-    res.render('post', content);
+    var payload = {};
+    payload.kvPairs = postRequest;
+    payload.typeName = "POST";
+    res.render('get-post', payload);
 });
 
 
