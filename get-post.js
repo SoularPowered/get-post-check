@@ -49,35 +49,42 @@ app.use(express.static(__dirname + '/public')); // tells express where to go for
 
 // If a GET request is received, grab the object and render the get.handlebars page
 app.get('/', function(req,res){
-    var getRequest = [];
+    var payload = {};
+    
     // Iterate over the req.query and push the key value pairs into our array
+    var getRequest = [];
     for (var key in req.query) {
         getRequest.push( {'key': key, 'value': req.query[key] });
     }
     
     // Make a 'content' object and pass it to our render page with a kvPairs[] property
-    var payload = {};
     payload.kvPairs = getRequest;
     payload.typeName = "GET";
     res.render('get-post', payload);
 });
 
-// If a POST request is received, parse the query or jsson and render the post.handlebars page
+// If a POST request is received, parse the body header and the query or jsson and render the post.handlebars page
 app.post('/', function(req, res){
+    var payload = {};
+
+    // Iterate over the req.body and push the key value pairs into our array
     var postRequest = [];
-    // Iterate over the req.query and push the key value pairs into our array
     for (var key in req.body) {
         postRequest.push( {'key': key, 'value': req.body[key] });
     }
 
-    // Make a 'content' object and pass it to our render page with a kvPairs[] property
-    var payload = {};
-    payload.kvPairs = postRequest;
+    // Iterate over the req.query and push the key value pairs into our array
+    var queryRequest = [];
+    for (var key in req.query) {
+        queryRequest.push( {'key': key, 'value': req.query[key] });
+    }
+
+    // Make a 'content' object and pass it to our render page with the two KvPairs[] properties
+    payload.postKvPairs = postRequest;
+    payload.queryKvPairs = queryRequest;
     payload.typeName = "POST";
     res.render('get-post', payload);
 });
-
-
 
 
 // Error Pages 404 (Not found) & 500 (Error)
